@@ -19,7 +19,7 @@ class User
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $fisrtname;
+    private $firstname;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -30,11 +30,6 @@ class User
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getUsername(): ?string
     {
@@ -48,9 +43,9 @@ class User
         return $this;
     }
 
-    public function getFisrtname(): ?string
+    public function getFirstname(): ?string
     {
-        return $this->fisrtname;
+        return $this->firstname;
     }
 
     public function setFisrtname(string $fisrtname): self
