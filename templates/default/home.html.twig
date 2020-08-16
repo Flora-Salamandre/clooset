@@ -1,0 +1,12 @@
+{% include 'base.html.twig' %}
+
+{% block body %}
+
+<p>There are the articles.</p>
+<ul>
+    {% for article in articles %}
+    <li>{{ article.name }}</li>
+    {% endfor %}
+</ul>
+    
+{% endblock %}
