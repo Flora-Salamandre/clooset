@@ -9,8 +9,18 @@ use App\Entity\Category;
 use App\Entity\User;
 use App\Entity\Article;
 use App\Entity\Fav;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 class AppFixtures extends Fixture
 {
+
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         // Colors
@@ -62,9 +72,9 @@ class AppFixtures extends Fixture
         // Users
 
         $users_map = [
-            ["username" => "ilarsen" , "firstname" => "Ida", "lastname" => "Larsen", "picture" => "https://randomuser.me/api/portraits/women/63.jpg"],
-            ["username" => "mlue" , "firstname" => "Mirko", "lastname" => "Laue", "picture" => "https://randomuser.me/api/portraits/men/28.jpg"],
-            ["username" => "msanchez" , "firstname" => "Ida", "lastname" => "Sanchez", "picture" => "https://randomuser.me/api/portraits/women/52.jpg"],
+            ["username" => "ilarsen" , "firstname" => "Ida", "lastname" => "Larsen", "picture" => "https://randomuser.me/api/portraits/women/63.jpg", "password" => "hover"],
+            ["username" => "mlue" , "firstname" => "Mirko", "lastname" => "Laue", "picture" => "https://randomuser.me/api/portraits/men/28.jpg", "password" => "sandbox"],
+            ["username" => "msanchez" , "firstname" => "Ida", "lastname" => "Sanchez", "picture" => "https://randomuser.me/api/portraits/women/52.jpg", "password" => "apple"],
         ];
 
         $users = [];
@@ -75,6 +85,7 @@ class AppFixtures extends Fixture
             $user->setFirstname($u["firstname"]);
             $user->setLastname($u["lastname"]);
             $user->setPicture($u["picture"]);
+            $user->setPassword($this->encoder->encodePassword($user, $u["picture"]));
             $manager->persist($user);
             array_push($users, $user);
         }
