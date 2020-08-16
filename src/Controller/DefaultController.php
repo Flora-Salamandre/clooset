@@ -17,9 +17,8 @@ class DefaultController extends AbstractController
     {
         $articles = $articleRepository->findAll();
 
-        return $this->render('default/home.html.twig', [
-            'articles' => $articles,
-        ]);
+        return $this->render('default/home.html.twig',
+            ['articles' => $articles]
+        );
     }
-
 }
