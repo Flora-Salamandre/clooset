@@ -74,7 +74,7 @@ class AppFixtures extends Fixture
         $users_map = [
             ["username" => "ilarsen" , "firstname" => "Ida", "lastname" => "Larsen", "picture" => "https://randomuser.me/api/portraits/women/63.jpg", "password" => "hover"],
             ["username" => "mlue" , "firstname" => "Mirko", "lastname" => "Laue", "picture" => "https://randomuser.me/api/portraits/men/28.jpg", "password" => "sandbox"],
-            ["username" => "msanchez" , "firstname" => "Ida", "lastname" => "Sanchez", "picture" => "https://randomuser.me/api/portraits/women/52.jpg", "password" => "apple"],
+            ["username" => "msanchez" , "firstname" => "Martine", "lastname" => "Sanchez", "picture" => "https://randomuser.me/api/portraits/women/52.jpg", "password" => "apple"],
         ];
 
         $users = [];
@@ -85,7 +85,7 @@ class AppFixtures extends Fixture
             $user->setFirstname($u["firstname"]);
             $user->setLastname($u["lastname"]);
             $user->setPicture($u["picture"]);
-            $user->setPassword($this->encoder->encodePassword($user, $u["picture"]));
+            $user->setPassword($this->encoder->encodePassword($user, $u["password"]));
             $manager->persist($user);
             array_push($users, $user);
         }

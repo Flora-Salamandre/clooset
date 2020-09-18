@@ -1,0 +1,51 @@
+{% include 'base.html.twig' %}
+
+{% block body %}
+Créez un nouvel article !
+
+<form method="post">
+
+<label for="name">Name : </label>
+<input type="text" name="name"/>
+
+<label for="description">Description : </label>
+<textarea name="description"></textarea>
+
+<label for="size">Size : </label>
+<input type="number" name="size"/>
+
+<label for="price">Price : </label>
+<input type="number" name="price"/>
+
+<label for="color1">Main color : </label>
+<select name="color1">
+    {% for color in colors %}
+        <option value="{{ color.label }}">{{ color.label }}</option>
+    {% endfor %}
+</select>
+
+<label for="color2">Secondary color : </label>
+<select name="color2">
+    <option value="">None</option>
+    {% for color in colors %}
+        <option value="{{ color.label }}">{{ color.label }}</option>
+    {% endfor %}
+</select>
+
+<label for="picture">Add a picture : </label>
+<input type="text" name="picture"/>
+
+<label for="category">Category : </label>
+<select name="category">
+    {% for category in categories %}
+        <option value="{{ category.label }}">{{ category.label }}</option>
+    {% endfor %}
+</select>
+
+<label for="brand">Brand : </label>
+<input type="text" name="brand"/>
+
+<input type="submit" value="Create">
+
+</form>
+{% endblock %}

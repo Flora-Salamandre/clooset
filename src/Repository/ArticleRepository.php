@@ -47,4 +47,68 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findByFilters($category, $maxPrice, $search, $color) 
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager;
+
+        $queryString = 'SELECT a
+            FROM App\Entity\Article a';
+
+        if ($category != null) {
+            $queryString = $queryString 
+                . ' WHERE a.category = :category';
+        }
+        if ($search != null) {
+            if ($category != null) {
+                $word = ' AND';
+            } else {
+                $word = ' WHERE';
+            }
+            $queryString = $queryString
+                . $word 
+                . ' (a.name LIKE :search'
+                . ' OR a.brand LIKE :search'
+                . ' OR a.description LIKE :search)';
+        }
+        if ($maxPrice != null) {
+            if ($category != null || $search != null) {
+                $word = ' AND';
+            } else {
+                $word = ' WHERE';
+            }
+            $queryString = $queryString 
+                . $word 
+                . ' a.price <= :maxPrice';
+        }
+        if ($color != null) {
+            if ($category != null || $search != null || $maxPrice != null) {
+                $word = ' AND';
+            } else {
+                $word = ' WHERE';
+            }
+            $queryString = $queryString 
+                . $word
+                . ' (a.color1 = :color'
+                . ' OR a.color2 = :color)';
+        }
+
+        $query = $query->createQuery($queryString);
+        
+        if ($category != null) {
+            $query = $query->setParameter('category', $category);
+        }
+        if ($search != null) {
+            $query = $query->setParameter('search', '%' . $search . '%');
+        }
+        if ($maxPrice != null) {
+            $query = $query->setParameter('maxPrice', $maxPrice);
+        }
+        if ($color != null) {
+            $query = $query->setParameter('color', $color);
+        }
+        
+        return $query->getResult();
+    }
 }
